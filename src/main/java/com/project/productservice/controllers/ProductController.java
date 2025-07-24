@@ -2,12 +2,9 @@ package com.project.productservice.controllers;
 
 
 import com.project.productservice.models.Product;
-import com.project.productservice.services.FakeStoreProductService;
 import com.project.productservice.services.IProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ public class ProductController {
 
     private IProductService productService;
 
-    public ProductController(IProductService productService) {
+    public ProductController(@Qualifier("productService") IProductService productService) {
         this.productService = productService;
     }
 
@@ -37,8 +34,8 @@ public class ProductController {
         return productService.createProduct(product);
     }
     @DeleteMapping("/{id}")
-    public boolean deleteSingleProduct(@PathVariable("id") Long id)
+    public void deleteSingleProduct(@PathVariable("id") Long id)
     {
-          return productService.deleteProduct(id);
+           productService.deleteProduct(id);
      }
 }
